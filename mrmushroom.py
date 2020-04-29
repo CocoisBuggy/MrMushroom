@@ -2,19 +2,26 @@ import discord
 import asyncio
 import random
 from pickle import load
-
 import requests
 import requests.auth
 import time
-
 start_time = time.time()
-
 import wikipedia
 import praw
 import os
 
+def command_count():
 
+    message_count=open("disbot_data.txt", 'r+', encoding='utf8')
+    message_count_vol=int(message_count.read())
+    message_count.close()
 
+    last_count=message_count_vol
+    a_count = last_count+1
+    gfg = open("disbot_data.txt", 'w', encoding='utf8')
+    gfg.write(str(a_count))
+    gfg.close()
+    print('total commands called:',a_count)
 
 
 ###REDDIT log in
@@ -49,6 +56,7 @@ class MyClient(discord.Client):
 
     async def on_message(self, message):
         if message.author.id == self.user.id:
+            command_count()
             return
 
         cont=message.content.lower()
