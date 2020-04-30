@@ -100,7 +100,7 @@ class MyClient(discord.Client):
 ###############################################################################
 
         if (message.author.id == 220156117983035392):
-            billchance=random.randint(1,32)
+            billchance=random.randint(1,20)
             if billchance == 1:
                 await message.channel.send("Bill? More like LOSER! **GOTEEEM**")
 
@@ -109,6 +109,12 @@ class MyClient(discord.Client):
             embed = (discord.Embed(description="HELP?!?!?!", colour=0x3DF270))
             await message.channel.send(embed=embed)
 
+        if cont == ('!mushcount'):
+            message_count=open("disbot_data.txt", 'r+', encoding='utf8')
+            message_count_vol=int(message_count.read())
+            message_count.close()
+            await message.channel.send("You guys have called me **{}** times. Damn you.".format(message_count_vol))
+
         if cont == ('what are you looking at?'):
 
             random_submission = reddit.subreddit('all').random()
@@ -116,8 +122,7 @@ class MyClient(discord.Client):
                 await message.channel.send("uh... Nothing.")
             else:
                 print(random_submission.url)
-                await message.channel.send("This thing from {}".format(random_submission.subreddit_name_prefixed))
-                await message.channel.send(random_submission.url)
+                await message.channel.send("This thing from **{}** \n{}".format(random_submission.subreddit_name_prefixed, random_submission.url))
 
 
 
