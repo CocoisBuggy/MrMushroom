@@ -234,7 +234,7 @@ class MyClient(discord.Client):
         if 'mushroom' in cont:
             await message.channel.send('I\'m Mr Mushroom!')
 
-        randomth=random.randint(1,10)
+        randomth=random.randint(1,60)
         if randomth == 1:
             rand_thought=random.randint(1,49)
             await message.channel.send(split_thought[rand_thought])
