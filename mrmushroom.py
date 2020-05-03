@@ -10,8 +10,22 @@ import wikipedia
 import praw
 import os
 
-def command_count():
 
+##Prompt / Response variables
+prompt = requests.get('https://raw.githubusercontent.com/CocoisBuggy/Prompt-response567576/master/prompt.txt')
+prompt_list_layer1 = prompt.text.replace('\n', '')
+prompt_list_layer2 = (prompt_list_layer1).split(',')
+odd_i = []
+even_i = []
+for i in range(0, len(prompt_list_layer2)):
+    if i % 2:
+        even_i.append(prompt_list_layer2[i])
+    else :
+        odd_i.append(prompt_list_layer2[i])
+
+
+
+def command_count():
     message_count=open("disbot_data.txt", 'r+', encoding='utf8')
     message_count_vol=int(message_count.read())
     message_count.close()
@@ -97,7 +111,7 @@ class MyClient(discord.Client):
 
             else:
                 await message.channel.send('`>> RCON Access denied. Fucker.`')
-###############################################################################
+###############################################################################``
 
         if (message.author.id == 220156117983035392):
             billchance=random.randint(1,20)
@@ -168,7 +182,6 @@ class MyClient(discord.Client):
             except IndexError:
                 wiki2.set_image(url='https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png')
                ## pass
-
             await message.channel.send(embed=wiki2)
 
 
@@ -194,23 +207,21 @@ class MyClient(discord.Client):
             splitme=readfacts[rand_fact]
             await message.channel.send(splitme)
 
-        if cont == ('hey'):
-            await message.channel.send('Fuck you.')
-
         if cont == ('tell a joke'):
             response=requests.get(url, headers={"Accept": "text/plain"})
             await message.channel.send(response.text)
 
-        if cont == ('i love you'):
-            await message.channel.send('You could never be loved.')
-        if cont == ('shut up'):
-            await message.channel.send('I wish I could!')
-        if cont == ('wanna be friends?'):
-            await message.channel.send('I don\'t think we have that kind of relationship')
-        if cont == ('otp'):
-            await message.channel.send('**Antisemitic joke goes here**')
-        if cont == ('sad'):
-            await message.channel.send('**PAARP Bwaaarp**')
+##Prompt / response code###########
+##All non-special responses.
+
+        res = 0
+        for line in odd_i:
+            if cont == line:
+                print(even_i[res])
+                await message.channel.send(even_i[res])
+            res = res+1
+
+###################################
 
         if 'wanna play' in cont:
             await message.channel.send('You have no friends.')
