@@ -4,12 +4,18 @@ import random
 from pickle import load
 import requests
 import requests.auth
+
+from discord.ext import commands
+
 import time
 start_time = time.time()
+
 import wikipedia
 import praw
 import os
 
+import sys
+import psutil
 
 ##Prompt / Response variables
 prompt = requests.get('https://raw.githubusercontent.com/CocoisBuggy/Prompt-response567576/master/prompt.txt')
@@ -36,6 +42,10 @@ def command_count():
     gfg.write(str(a_count))
     gfg.close()
     print('total commands called:',a_count)
+
+
+
+emoji = '\N{MUSHROOM}'
 
 
 ###REDDIT log in
@@ -67,6 +77,9 @@ class MyClient(discord.Client):
         await client.change_presence(status=discord.Status.online, activity=activity)
         print('Logged on as {0}!'.format(self.user))
         print('We go now!')
+
+
+
 
     async def on_message(self, message):
         if message.author.id == self.user.id:
@@ -103,6 +116,10 @@ class MyClient(discord.Client):
                     os.remove("datausage.png")
                     await message.channel.send('`>> Datausage log cleared`')
 
+                if message.content == ('!mushRcon: -mush reload'):
+
+                    await message.channel.send('`>> reloaded`')
+
                 if message.content == ('!mushRcon: -mush print-uptime'):
                     elapsed_time = time.time() - start_time
                     round_time=round(elapsed_time, 2)
@@ -122,12 +139,14 @@ class MyClient(discord.Client):
         if cont == ('!mush'):
             embed = (discord.Embed(description="HELP?!?!?!", colour=0x3DF270))
             await message.channel.send(embed=embed)
+            await message.add_reaction(emoji) #Reaction
 
         if cont == ('!mushcount'):
             message_count=open("disbot_data.txt", 'r+', encoding='utf8')
             message_count_vol=int(message_count.read())
             message_count.close()
             await message.channel.send("You guys have called me **{}** times. Damn you.".format(message_count_vol))
+            await message.add_reaction(emoji) #Reaction
 
         if cont == ('what are you looking at?'):
 
@@ -137,6 +156,8 @@ class MyClient(discord.Client):
             else:
                 print(random_submission.url)
                 await message.channel.send("This thing from **{}** \n{}".format(random_submission.subreddit_name_prefixed, random_submission.url))
+
+            await message.add_reaction(emoji) #Reaction
 
 
 
@@ -161,6 +182,7 @@ class MyClient(discord.Client):
                 wiki.set_images(url='https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png')
 
             await message.channel.send(embed=wiki)
+            await message.add_reaction(emoji) #Reaction
 
 
         if cont.startswith('!mushseek'):
@@ -183,6 +205,7 @@ class MyClient(discord.Client):
                 wiki2.set_image(url='https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png')
                ## pass
             await message.channel.send(embed=wiki2)
+            await message.add_reaction(emoji) #Reaction
 
 
         if cont == ('i am coco'):
@@ -195,21 +218,25 @@ class MyClient(discord.Client):
             rand_line=random.randint(1,2000)
             splitme=str(lms[rand_line])
             await message.channel.send(splitme)
+            await message.add_reaction(emoji) #Reaction
 
         if cont == ('penny for your thoughts?'):
             rand_thought=random.randint(1,49)
             ##split_thought=thoughts.readlines()
             await message.channel.send(split_thought[rand_thought])
+            await message.add_reaction(emoji) #Reaction
 
         if cont == ('fact'):
             rand_fact=random.randint(1,550)
             print(rand_fact)
             splitme=readfacts[rand_fact]
             await message.channel.send(splitme)
+            await message.add_reaction(emoji) #Reaction
 
         if cont == ('tell a joke'):
             response=requests.get(url, headers={"Accept": "text/plain"})
             await message.channel.send(response.text)
+            await message.add_reaction(emoji) #Reaction
 
 ##Prompt / response code###########
 ##All non-special responses.
@@ -239,6 +266,8 @@ class MyClient(discord.Client):
             rand_thought=random.randint(1,49)
             await message.channel.send(split_thought[rand_thought])
             await message.channel.send(split_thought)
+
+
 
 
 client = MyClient()
