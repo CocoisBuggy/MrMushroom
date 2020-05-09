@@ -83,8 +83,6 @@ class MyClient(discord.Client):
         print('We go now!')
 
 
-
-
     async def on_message(self, message):
         if message.author.id == self.user.id:
             command_count()
@@ -243,7 +241,6 @@ class MyClient(discord.Client):
 
 ##Prompt / response code###########
 ##All non-special responses.
-
         res = 0
         for line in odd_i:
             if cont == line:
@@ -251,7 +248,6 @@ class MyClient(discord.Client):
                 await message.channel.send(even_i[res])
             res = res+1
 
-###################################
 
         if 'wanna play' in cont:
             await message.channel.send('You have no friends.')
@@ -270,8 +266,5 @@ class MyClient(discord.Client):
             await message.channel.send(split_thought[rand_thought])
             await message.channel.send(split_thought)
 
-
-
-
 client = MyClient()
-client.run('Njk4MTU5MDI3NzcwNjIxOTY0.XptXeg.TzGOaUPmVTfpx7tP6QUo6pcPe2E')
+client.run(all_lines[5].replace('\n', ''))
