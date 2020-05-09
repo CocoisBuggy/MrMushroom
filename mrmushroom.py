@@ -49,14 +49,18 @@ emoji = '\N{MUSHROOM}'
 
 
 ###REDDIT log in
-reddit = praw.Reddit(client_id='VMCJgB7S5iAYRA',
-                     client_secret='2OIH72qxFqbuChVkGvaqp6upZAI',
-                     password='redditiscoco123',
-                     user_agent='testscript by /u/CocoisAfraid ',
-                     username='CocoisAfraid')
+redd_cred = open('praw_cred.txt', 'r', encoding='utf8')
+all_lines = redd_cred.readlines()
+
+reddit = praw.Reddit(client_id=all_lines[0].replace('\n', ''),
+                     client_secret=all_lines[1].replace('\n', ''),
+                     password=all_lines[2].replace('\n', ''),
+                     user_agent=all_lines[3].replace('\n', ''),
+                     username=all_lines[4].replace('\n', ''))
 currentuser=reddit.user.me()
 print('REDDIT USER LOGGED IN AS:')
 print(currentuser)
+
 
 url='https://icanhazdadjoke.com/'
 modelgen=open("smartgen.txt", "r", encoding='utf8')
@@ -88,8 +92,7 @@ class MyClient(discord.Client):
 
         cont=message.content.lower()
 
-        print('Message from {0.author}: {0.content}'.format(message))
-        print(message.author.id)
+        print(message.author.id, 'Message from {0.author}: {0.content}'.format(message))
 
 ##RCON DEFINE   ###############################################################
 
