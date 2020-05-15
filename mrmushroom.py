@@ -4,20 +4,17 @@ import random
 from pickle import load
 import requests
 import requests.auth
-
 from discord.ext import commands
-
 import time
 start_time = time.time()
 
 import wikipedia
 import praw
 import os
-
 import sys
 import psutil
 
-##Prompt / Response variables
+## Prompt / Response variables
 prompt = requests.get('https://raw.githubusercontent.com/CocoisBuggy/Prompt-response567576/master/prompt.txt')
 prompt_list_layer1 = prompt.text.replace('\n', '')
 prompt_list_layer2 = (prompt_list_layer1).split(',')
@@ -64,15 +61,14 @@ print(currentuser)
 
 url='https://icanhazdadjoke.com/'
 modelgen=open("smartgen.txt", "r", encoding='utf8')
-
 thoughts=open("thoughts.JSON", "r", encoding='utf8')
 split_thought=thoughts.readlines()
-
 facts=open("facts.txt", "r", encoding='utf8')
 readfacts=facts.readlines()
-
 lms=modelgen.readlines()
 
+link_log = open('link_log.txt', 'a+', encoding='utf8')
+link_log.close()
 
 class MyClient(discord.Client):
 
@@ -91,6 +87,14 @@ class MyClient(discord.Client):
         cont=message.content.lower()
 
         print(message.author.id, 'Message from {0.author}: {0.content}'.format(message))
+        if cont.startswith('https:'):
+            with open('link_log.txt', 'a+', encoding='utf8') as link_log:
+                link_log.write(cont+'\n')
+        if cont.startswith('-play https:'):
+            hsj=cont[6:]
+            with open('link_log.txt', 'a+', encoding='utf8') as link_log:
+                link_log.write(hsj+'\n')
+
 
 ##RCON DEFINE   ###############################################################
 
